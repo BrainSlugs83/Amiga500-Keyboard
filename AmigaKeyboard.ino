@@ -118,6 +118,9 @@ const unsigned char * alpha3 = (const unsigned char *)"zxcvbnm,./   ";
 bool numlock_on = false;
 bool scrolllock_on = false;
 
+bool left_ctrl = false;
+bool right_ctrl = false;
+
 void UpdateLeds()
 {
   digitalWrite(LED_NUMLOCK, numlock_on ? LED_NUMLOCK_ON : LED_NUMLOCK_OFF);
@@ -180,6 +183,8 @@ void loop()
 
         numlock_on = false;
         scrolllock_on = false;
+        left_ctrl = false;
+        right_ctrl = false;
         UpdateLeds();
     }
     // Waiting for the reset to end
@@ -305,13 +310,25 @@ void loop()
                   else if (keyCode == 92) { SetKey(isConnected, (84 + 136), pressed); } // NUMPAD /
                   else if (keyCode == 93) { SetKey(isConnected, (85 + 136), pressed); } // NUMPAD *
                   else if (keyCode == 94) { SetKey(isConnected, (87 + 136), pressed); } // NUMPAD +
-                  else if (keyCode == 95) { SetKey(isConnected, (95 + 136), pressed); } // AMIGA HELP -> MENU
+                  else if (keyCode == 95) 
+                  { 
+                    // AMIGA HELP -> PrintScreen
+                    // AMIGA HELP + CTRL -> Pause Break
+
+                    int code = 70 + 136; // Print Screen
+                    if (left_ctrl || right_ctrl) 
+                    { 
+                      code = 72 + 136; // Pause
+                    }
+                    
+                    SetKey(isConnected, code, pressed); 
+                  } 
                   else if (keyCode == 96) { SetKey(isConnected, KEY_LEFT_SHIFT, pressed); }
                   else if (keyCode == 97) { SetKey(isConnected, KEY_RIGHT_SHIFT, pressed); }
                   else if (keyCode == 98) { SetKey(isConnected, KEY_CAPS_LOCK, true); delay(10); SetKey(isConnected, KEY_CAPS_LOCK, false); }
                   else if (keyCode == 99) { SetKey(isConnected, KEY_LEFT_GUI, pressed); } // AMIGA CTRL -> Windows Key
-                  else if (keyCode == 100) { SetKey(isConnected, KEY_LEFT_CTRL, pressed); }
-                  else if (keyCode == 101) { SetKey(isConnected, KEY_RIGHT_CTRL, pressed); }
+                  else if (keyCode == 100) { SetKey(isConnected, KEY_LEFT_CTRL, pressed); left_ctrl = pressed && isConnected; }
+                  else if (keyCode == 101) { SetKey(isConnected, KEY_RIGHT_CTRL, pressed); right_ctrl = pressed && isConnected; }
                   else if (keyCode == 102) { SetKey(isConnected, KEY_LEFT_ALT, pressed); }
                   else if (keyCode == 103) { SetKey(isConnected, KEY_RIGHT_ALT, pressed); }
 
