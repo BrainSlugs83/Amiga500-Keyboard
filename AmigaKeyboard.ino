@@ -136,11 +136,11 @@ void UpdateLeds()
 
 void setup()
 {
-    pinMode(A500CLK,        INPUT);
-    pinMode(A500SP,         INPUT);
-    pinMode(A500RES,        INPUT);
+    pinMode(A500CLK, INPUT);
+    pinMode(A500SP,  INPUT);
+    pinMode(A500RES, INPUT);
 
-    if (LED_NUMLOCK >= 0) { pinMode(LED_NUMLOCK,    OUTPUT); }
+    if (LED_NUMLOCK >= 0)    { pinMode(LED_NUMLOCK,    OUTPUT); }
     if (LED_SCROLLLOCK >= 0) { pinMode(LED_SCROLLLOCK, OUTPUT); }
 
     digitalWrite(A500SP, LOW);
