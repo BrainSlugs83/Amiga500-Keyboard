@@ -123,8 +123,15 @@ bool right_ctrl = false;
 
 void UpdateLeds()
 {
-  digitalWrite(LED_NUMLOCK, numlock_on ? LED_NUMLOCK_ON : LED_NUMLOCK_OFF);
-  digitalWrite(LED_SCROLLLOCK, scrolllock_on ? LED_SCROLLLOCK_ON : LED_SCROLLLOCK_OFF);
+  if (LED_NUMLOCK >= 0)
+  {
+    digitalWrite(LED_NUMLOCK, numlock_on ? LED_NUMLOCK_ON : LED_NUMLOCK_OFF);
+  }
+
+  if (LED_SCROLLLOCK >= 0)
+  {
+    digitalWrite(LED_SCROLLLOCK, scrolllock_on ? LED_SCROLLLOCK_ON : LED_SCROLLLOCK_OFF);
+  }
 }
 
 void setup()
@@ -132,8 +139,9 @@ void setup()
     pinMode(A500CLK,        INPUT);
     pinMode(A500SP,         INPUT);
     pinMode(A500RES,        INPUT);
-    pinMode(LED_NUMLOCK,    OUTPUT);
-    pinMode(LED_SCROLLLOCK, OUTPUT);
+
+    if (LED_NUMLOCK >= 0) { pinMode(LED_NUMLOCK,    OUTPUT); }
+    if (LED_SCROLLLOCK >= 0) { pinMode(LED_SCROLLLOCK, OUTPUT); }
 
     digitalWrite(A500SP, LOW);
     UpdateLeds();
